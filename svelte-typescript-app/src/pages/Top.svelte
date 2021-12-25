@@ -1,11 +1,13 @@
 <script lang="ts">
   import CustomButton from '../components/CustomButton.svelte'
+  import InputField from '../components/InputField.svelte'
   import type { Menu } from '../model/Menu'
 
   let name: string = 'World'
   let yes: boolean = false
 
   let flavours: Menu[] = ['Mint choc chip']
+  let field: any
 
   let menu: Menu[] = ['Cookies and cream', 'Mint choc chip', 'Raspberry ripple']
 
@@ -75,5 +77,9 @@
     {joinFlavour(flavours)}
 
     <CustomButton on:click={handleClick} />
+    <div>
+      <InputField bind:this={field} />
+      <button on:click={() => field.focus()}>focus this field</button>
+    </div>
   </div>
 </main>
