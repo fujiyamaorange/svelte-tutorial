@@ -1,10 +1,13 @@
 <script lang="ts">
   import CustomButton from '../components/CustomButton.svelte'
   import InputField from '../components/InputField.svelte'
+  import Timer from '../components/Timer.svelte'
   import type { Menu } from '../model/Menu'
 
   let name: string = 'World'
   let yes: boolean = false
+  let timerOpen: boolean = true
+  let timeSeconds: number = 0
 
   let flavours: Menu[] = ['Mint choc chip']
   let field: any
@@ -14,6 +17,9 @@
   function handleClick() {
     console.log('Button Clicked!', Date.now())
   }
+
+  const toggle = () => (timerOpen = !timerOpen)
+  const handleTick = () => (timeSeconds += 1)
 
   function joinFlavour(flavours: Menu[]) {
     if (flavours.length === 1) return flavours[0]
@@ -80,6 +86,18 @@
     <div>
       <InputField bind:this={field} />
       <button on:click={() => field.focus()}>focus this field</button>
+    </div>
+
+    <div>
+      <button on:click={toggle}>{timerOpen ? 'Stop' : 'Start'} Timer</button>
+      <p>
+        The Timer component has been open for
+        {timeSeconds}
+        {timeSeconds === 1 ? 'second' : 'seconds'}
+      </p>
+      {#if timerOpen}
+        <Timer callback={handleTick} />
+      {/if}
     </div>
   </div>
 </main>

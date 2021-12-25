@@ -1,4 +1,6 @@
 <script>
+  import { onMount } from 'svelte'
+
   // These values are bound to properties of the video
   let time = 0
   let duration
@@ -9,6 +11,14 @@
 
   // Used to track time of last mouse down event
   let lastMouseDown
+
+  onMount(() => {
+    console.log('onMount')
+
+    return () => {
+      console.log('onDestroyed')
+    }
+  })
 
   function handleMove(e) {
     // Make the controls visible, but fade out after
