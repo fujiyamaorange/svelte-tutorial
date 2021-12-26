@@ -25,6 +25,8 @@
     "typescript": "^4.0.0"
   },
   "dependencies": {
+    "deepl": "^1.0.13",
+    "elizabot": "^0.0.3",
     "sirv-cli": "^1.0.0",
     "svelte-routing": "^1.6.0"
   }
