@@ -43,7 +43,7 @@
   }
 
   function handleMouseup(e) {
-    // mouseDownしてから0.3s以内にmouseUpしないとクリックと認めない
+    // mouseDownしてから0.3s以内にmouseUpしないとクリックと認めない
     if (new Date() - lastMouseDown < 300) {
       if (paused) e.target.play()
       else e.target.pause()
@@ -60,6 +60,38 @@
     return `${minutes}:${seconds}`
   }
 </script>
+
+<h1>Caminandes: Llamigos</h1>
+<p>
+  From
+  <a href="https://cloud.blender.org/open-projects">Blender Open Projects</a>. CC-BY
+</p>
+
+<div>
+  <video
+    poster="https://sveltejs.github.io/assets/caminandes-llamigos.jpg"
+    src="https://sveltejs.github.io/assets/caminandes-llamigos.mp4"
+    on:mousemove={handleMove}
+    on:touchmove|preventDefault={handleMove}
+    on:mousedown={handleMousedown}
+    on:mouseup={handleMouseup}
+    bind:currentTime={time}
+    bind:duration
+    bind:paused
+  >
+    <track kind="captions" />
+  </video>
+
+  <div class="controls" style="opacity: {duration && showControls ? 1 : 0}">
+    <progress value={time / duration || 0} />
+
+    <div class="info">
+      <span class="time">{format(time)}</span>
+      <span>click anywhere to {paused ? 'play' : 'pause'} / drag to seek</span>
+      <span class="time">{format(duration)}</span>
+    </div>
+  </div>
+</div>
 
 <style>
   div {
@@ -114,36 +146,4 @@
   video {
     width: 100%;
   }
-</style>
-
-<h1>Caminandes: Llamigos</h1>
-<p>
-  From
-  <a href="https://cloud.blender.org/open-projects">Blender Open Projects</a>.
-  CC-BY
-</p>
-
-<div>
-  <video
-    poster="https://sveltejs.github.io/assets/caminandes-llamigos.jpg"
-    src="https://sveltejs.github.io/assets/caminandes-llamigos.mp4"
-    on:mousemove={handleMove}
-    on:touchmove|preventDefault={handleMove}
-    on:mousedown={handleMousedown}
-    on:mouseup={handleMouseup}
-    bind:currentTime={time}
-    bind:duration
-    bind:paused>
-    <track kind="captions" />
-  </video>
-
-  <div class="controls" style="opacity: {duration && showControls ? 1 : 0}">
-    <progress value={time / duration || 0} />
-
-    <div class="info">
-      <span class="time">{format(time)}</span>
-      <span>click anywhere to {paused ? 'play' : 'pause'} / drag to seek</span>
-      <span class="time">{format(duration)}</span>
-    </div>
-  </div>
-</div>
+</h1>

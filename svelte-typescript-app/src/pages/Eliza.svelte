@@ -1,10 +1,9 @@
 <script lang="ts">
   import ElizaBot from 'elizabot'
   import { beforeUpdate, afterUpdate } from 'svelte'
-  // import translate from 'deepl'
 
-  let div: any
-  let autoscroll: any
+  let div: HTMLDivElement
+  let autoscroll: boolean
 
   beforeUpdate(() => {
     autoscroll = div && div.offsetHeight + div.scrollTop > div.scrollHeight - 20
@@ -18,7 +17,7 @@
 
   let comments: {
     author?: string
-    text?: any
+    text?: string
     placeholder?: boolean
   }[] = [{ author: 'eliza', text: eliza.getInitial() }]
 
@@ -55,24 +54,21 @@
       }, 200 + Math.random() * 200)
     }
   }
-
-  function translateToJa(text?: string) {
-    // DeepL
-    // translate({
-    //   free_api: true,
-    //   text: 'I am a text',
-    //   target_lang: 'JA',
-    //   auth_key: 'authkey',
-    //   // All optional parameters available in the official documentation can be defined here as well.
-    // })
-    //   .then((result) => {
-    //     console.log(result.data)
-    //   })
-    //   .catch((error) => {
-    //     console.error(error)
-    //   })
-  }
 </script>
+
+`
+<div class="chat">
+  <h1>ElizaBot</h1>
+
+  <div class="scrollable" bind:this={div}>
+    {#each comments as comment}
+      <article class={comment.author}><span>{comment.text}</span></article>
+    {/each}
+  </div>
+
+  <input on:keydown={handleKeydown} />
+</div>
+`
 
 <style>
   .chat {
@@ -122,15 +118,3 @@
     padding: 8px 4px;
   }
 </style>
-
-<div class="chat">
-  <h1>ElizaBot</h1>
-
-  <div class="scrollable" bind:this={div}>
-    {#each comments as comment}
-      <article class={comment.author}><span>{comment.text}</span></article>
-    {/each}
-  </div>
-
-  <input on:keydown={handleKeydown} />
-</div>
